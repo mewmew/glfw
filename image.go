@@ -22,6 +22,11 @@ type Image struct {
 	id gl.Uint
 }
 
+// Close closes the image and deletes it's OpenGL texture.
+func (img *Image) Close() {
+	gl.DeleteTextures(1, &img.id)
+}
+
 // curTexID represent the current texture id.
 var curTexID = gl.Uint(1<<32 - 1)
 
@@ -94,7 +99,8 @@ func (src *Image) DrawRect(r image.Rectangle, sp image.Point) {
 	gl.End()
 }
 
-// OpenImage opens the provided image and returns a parsed OpenGL texture.
+// OpenImage opens the provided image and returns a parsed OpenGL texture. The
+// client must close the image when finished with it.
 func OpenImage(filePath string) (img *Image, err error) {
 	f, err := os.Open(filePath)
 	if err != nil {
@@ -104,7 +110,8 @@ func OpenImage(filePath string) (img *Image, err error) {
 	return ReadImage(f)
 }
 
-// ReadImage reads from r and returns a parsed OpenGL texture.
+// ReadImage reads from r and returns a parsed OpenGL texture. The client must
+// close the image when finished with it.
 func ReadImage(r io.Reader) (img *Image, err error) {
 	// Decode the image to an RGBA image.
 	i, _, err := image.Decode(r)
