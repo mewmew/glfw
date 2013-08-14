@@ -17,6 +17,16 @@ they are interested in by calling the corresponding Enable* functions.
 
 [GLFW]: https://github.com/glfw/glfw/
 
+Examples
+--------
+
+simple is an example which opens a new window, hooks the close events and
+displays two images.
+
+	go get github.com/mewmew/win/examples/simple
+
+![Screenshot - simple](https://github.com/mewmew/win/blob/master/examples/simple/simple.png?raw=true)
+
 Documentation
 -------------
 
