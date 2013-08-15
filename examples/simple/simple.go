@@ -1,11 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"image"
 	"log"
 	"runtime"
 	"time"
 
+	"github.com/mewkiz/pkg/goutil"
 	"github.com/mewmew/win"
 )
 
@@ -34,14 +36,19 @@ func simple() (err error) {
 	// Register that we are interested in receiving close events.
 	win.EnableCloseChan()
 
+	dir, err := goutil.SrcDir("github.com/mewmew/win/examples/simple")
+	if err != nil {
+		return err
+	}
+
 	// http://www.publicdomainpictures.net/pictures/40000/velka/pyrotechnics.jpg
-	imgA, err := win.OpenImage("a.png")
+	imgA, err := win.OpenImage(fmt.Sprintf("%s/a.png", dir))
 	if err != nil {
 		return err
 	}
 	defer imgA.Close()
 
-	imgB, err := win.OpenImage("b.png")
+	imgB, err := win.OpenImage(fmt.Sprintf("%s/b.png", dir))
 	if err != nil {
 		return err
 	}
