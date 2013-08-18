@@ -162,8 +162,8 @@ func convertImage(img image.Image) (rgba *image.RGBA) {
 
 	rect := img.Bounds()
 	rgba = image.NewRGBA(rect)
-	for x := rect.Min.X; x < rect.Max.X; x++ {
-		for y := rect.Min.Y; y < rect.Max.Y; y++ {
+	for y := rect.Min.Y; y < rect.Max.Y; y++ {
+		for x := rect.Min.X; x < rect.Max.X; x++ {
 			rgba.Set(x, y, img.At(x, y))
 		}
 	}
