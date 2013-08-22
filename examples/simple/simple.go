@@ -76,6 +76,4 @@ func simple() (err error) {
 			// very simple implementation to update 60 times per second.
 		}
 	}
-
-	return nil
 }
