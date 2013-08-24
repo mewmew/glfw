@@ -12,6 +12,9 @@ var (
 	// CloseChan receives close events when the window is closed.
 	CloseChan chan we.Close
 
+	// ResizeChan receives resize events when the window is resized.
+	ResizeChan chan we.Resize
+
 	// KeyPressChan receives key press events when a keyboard key is pressed.
 	KeyPressChan chan we.KeyPress
 	// KeyReleaseChan receives key release events when a keyboard key is
@@ -52,6 +55,12 @@ var (
 // events on CloseChan, in order to prevent deadlocks.
 func EnableCloseChan() {
 	CloseChan = make(chan we.Close)
+}
+
+// EnableResizeChan enables ResizeChan. The client is responsible for receiving
+// events on ResizeChan, in order to prevent deadlocks.
+func EnableResizeChan() {
+	ResizeChan = make(chan we.Resize)
 }
 
 // EnableKeyPressChan enables KeyPressChan. The client is responsible for
@@ -125,6 +134,9 @@ func hookEvents() {
 	// close events.
 	w.SetCloseCallback(onClose)
 
+	// resize events.
+	w.SetSizeCallback(onSize)
+
 	// key events.
 	w.SetKeyCallback(onKey)
 	w.SetCharacterCallback(onChar)
@@ -151,6 +163,18 @@ func onClose(w *glfw3.Window) {
 		return
 	}
 	CloseChan <- we.Close{}
+}
+
+// onSize is the resize event callback function.
+func onSize(w *glfw3.Window, width, height int) {
+	if ResizeChan == nil {
+		return
+	}
+	e := we.Resize{
+		Width: width,
+		Height: height,
+	}
+	ResizeChan <- e
 }
 
 // onKey is the key event callback function.
