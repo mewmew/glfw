@@ -45,6 +45,10 @@ func Open(width, height int) (err error) {
 	gl.Init()
 	gl.Enable(gl.TEXTURE_2D)
 
+	// Enable alpha channel for transparency.
+	gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+	gl.Enable(gl.BLEND)
+
 	// left:   0
 	// right:  width
 	// bottom: hight
@@ -58,7 +62,6 @@ func Open(width, height int) (err error) {
 	gl.Disable(gl.DEPTH_TEST)
 	gl.Disable(gl.LIGHTING)
 
-	gl.Disable(gl.BLEND)
 	gl.Disable(gl.DITHER)
 
 	hookEvents()
