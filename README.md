@@ -32,7 +32,7 @@ Documentation
 
 Documentation provided by GoDoc.
 
-   - [win][]
+   - [win][]: provides a simplified Go binding for GLFW 3.
 
 [win]: http://godoc.org/github.com/mewmew/win
 
