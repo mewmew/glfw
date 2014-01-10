@@ -40,9 +40,10 @@ func bind(id gl.Uint) {
 	gl.BindTexture(gl.TEXTURE_2D, id)
 }
 
-// Draw draws the src image onto the screen at the provided coordinate p.
-func (src *Image) Draw(p image.Point) {
-	r := image.Rect(p.X, p.Y, p.X+src.Width, p.Y+src.Height)
+// Draw draws the entire src image onto the screen starting at the destination
+// point dp.
+func (src *Image) Draw(dp image.Point) {
+	r := image.Rect(dp.X, dp.Y, dp.X+src.Width, dp.Y+src.Height)
 
 	bind(src.id)
 
@@ -67,34 +68,33 @@ func (src *Image) Draw(p image.Point) {
 	gl.End()
 }
 
-// DrawRect draws a portion of the src image onto the screen within the
-// rectangle r. The portion of the src image has the size of the rectangle r and
-// starts at the coordinate sp.
-func (src *Image) DrawRect(r image.Rectangle, sp image.Point) {
+// DrawRect fills the destination rectangle dr of the screen with corresponding
+// pixels from the src image starting at the source point sp.
+func (src *Image) DrawRect(dr image.Rectangle, sp image.Point) {
 	bind(src.id)
 
 	xmin := gl.Float(sp.X) / gl.Float(src.Width)
 	ymin := gl.Float(sp.Y) / gl.Float(src.Height)
-	xmax := gl.Float(sp.X+r.Dx()) / gl.Float(src.Width)
-	ymax := gl.Float(sp.Y+r.Dx()) / gl.Float(src.Height)
+	xmax := gl.Float(sp.X+dr.Dx()) / gl.Float(src.Width)
+	ymax := gl.Float(sp.Y+dr.Dx()) / gl.Float(src.Height)
 
 	gl.Begin(gl.QUADS)
 
 	// top left
 	gl.TexCoord2f(xmin, ymin)
-	gl.Vertex2i(gl.Int(r.Min.X), gl.Int(r.Min.Y))
+	gl.Vertex2i(gl.Int(dr.Min.X), gl.Int(dr.Min.Y))
 
 	// top right
 	gl.TexCoord2f(xmax, ymin)
-	gl.Vertex2i(gl.Int(r.Max.X), gl.Int(r.Min.Y))
+	gl.Vertex2i(gl.Int(dr.Max.X), gl.Int(dr.Min.Y))
 
 	// bottom right
 	gl.TexCoord2f(xmax, ymax)
-	gl.Vertex2i(gl.Int(r.Max.X), gl.Int(r.Max.Y))
+	gl.Vertex2i(gl.Int(dr.Max.X), gl.Int(dr.Max.Y))
 
 	// bottom left
 	gl.TexCoord2f(xmin, ymax)
-	gl.Vertex2i(gl.Int(r.Min.X), gl.Int(r.Max.Y))
+	gl.Vertex2i(gl.Int(dr.Min.X), gl.Int(dr.Max.Y))
 
 	gl.End()
 }

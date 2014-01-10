@@ -171,7 +171,7 @@ func onSize(w *glfw3.Window, width, height int) {
 		return
 	}
 	e := we.Resize{
-		Width: width,
+		Width:  width,
 		Height: height,
 	}
 	ResizeChan <- e
