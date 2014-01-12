@@ -1,10 +1,14 @@
-// Package win provides a simplified Go binding for GLFW 3. Channels are used
-// instead of callbacks for event handling.
+// Package win handles window creation, drawing and events. The window events
+// are defined in a dedicated package located at:
+//    github.com/mewmew/we
 //
-// For the sake of simplicity this package only allows the use of one window.
-// Each event type has it's own dedicated channel and clients must register
-// which events they are interested in by calling the corresponding Enable*
-// functions.
+// The library uses a small subset of the features provided by GLFW 3. For the
+// sake of simplicity support for multiple windows has intentionally been left
+// out.
+//
+// Channels are used instead of callbacks for event handling. Each event type
+// has it's own dedicated channel and clients must register which events they
+// are interested in by calling the corresponding Enable*  functions.
 //
 // All calls to this package must originate from the same dedicated OS thread.
 // Use runtime.LockOSThread to achieve this.
@@ -19,23 +23,28 @@ import (
 	"github.com/go-gl/glfw3"
 )
 
-// w is the window containing the OpenGL context.
+// w represents the window containing the OpenGL context. It is opened through a
+// call to Open and it's this single window that is utilized throughout the
+// entire library.
 var w *glfw3.Window
 
-// Open opens a window with the specified dimensions. The client must close the
-// window when finished with it.
+// Open opens a window with the specified dimensions. Only one window can be
+// open at the same time. It is this single window that is utilized throughout
+// the entire library.
+//
+// Note: The Close function must be called when finished using the window.
 func Open(width, height int) (err error) {
 	if w != nil {
 		panic("win.Open: the window has already been opened.")
 	}
 
 	if !glfw3.Init() {
-		return errors.New("win.Open: glfw3.Init failed.")
+		return errors.New("win.Open: glfw3.Init failed")
 	}
 
-	w, err = glfw3.CreateWindow(width, height, "untitled window", nil, nil)
+	w, err = glfw3.CreateWindow(width, height, "untitled", nil, nil)
 	if err != nil {
-		return fmt.Errorf("win.Open: glfw3.CreateWindow failed; %s", err)
+		return fmt.Errorf("win.Open: glfw3.CreateWindow failed; %v", err)
 	}
 	w.MakeContextCurrent()
 

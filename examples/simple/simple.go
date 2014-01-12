@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/mewkiz/pkg/goutil"
-	"github.com/mewmew/win"
+	"github.com/mewmew/glfw/win"
 )
 
 func main() {
@@ -36,7 +36,7 @@ func simple() (err error) {
 	// Register that we are interested in receiving close events.
 	win.EnableCloseChan()
 
-	dir, err := goutil.SrcDir("github.com/mewmew/win/examples/simple")
+	dir, err := goutil.SrcDir("github.com/mewmew/glfw/examples/simple")
 	if err != nil {
 		return err
 	}
