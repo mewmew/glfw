@@ -7,13 +7,20 @@ subject to change. The documentation can be inaccurate.
 win
 ===
 
-This package provides a simplified Go binding for [GLFW 3][glfw]. Channels are
-used instead of callbacks for event handling.
+Package win handles window creation, drawing and events. The window events are
+defined in a dedicated package located at:
+	github.com/mewmew/we
 
-For the sake of simplicity this package only allows the use of one window. Each
-event type has it's own dedicated channel and clients must register which events
-they are interested in by calling the corresponding Enable* functions.
+The library uses a small subset of the features provided by [GLFW 3][glfw]. For
+the sake of simplicity support for multiple windows has intentionally been left
+out.
 
+Channels are used instead of callbacks for event handling. Each event type has
+its own dedicated channel and clients must register which events they are
+interested in by calling the corresponding Enable*  functions.
+
+All calls to this package must originate from the same dedicated OS thread.
+Use runtime.LockOSThread to achieve this.
 
 [glfw]: https://github.com/glfw/glfw/
 

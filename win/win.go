@@ -7,8 +7,8 @@
 // out.
 //
 // Channels are used instead of callbacks for event handling. Each event type
-// has it's own dedicated channel and clients must register which events they
-// are interested in by calling the corresponding Enable*  functions.
+// has its own dedicated channel and clients must register which events they are
+// interested in by calling the corresponding Enable*  functions.
 //
 // All calls to this package must originate from the same dedicated OS thread.
 // Use runtime.LockOSThread to achieve this.
