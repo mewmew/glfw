@@ -294,7 +294,7 @@ func onCursorEnter(w *glfw3.Window, entered bool) {
 
 // onScroll is the scroll event callback function.
 func onScroll(w *glfw3.Window, xoff, yoff float64) {
-	getMod()
+	// TODO(u): Add cursor coordinates to the ScrollX and ScrollY events.
 	if xoff != 0 {
 		if ScrollXChan != nil {
 			e := we.ScrollX{
