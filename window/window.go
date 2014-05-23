@@ -11,9 +11,7 @@ import "C"
 import (
 	"fmt"
 	"image"
-	"image/color"
 
-	gl "github.com/chsc/gogl/gl43"
 	"github.com/mewmew/glfw"
 	"github.com/mewmew/wandi"
 )
@@ -39,9 +37,6 @@ func Open(width, height int) (win Window, err error) {
 	if err != nil {
 		return Window{}, err
 	}
-
-	// Initialize OpenGL.
-	gl.Init()
 
 	// Create a new window of the specified dimensions.
 	title := C.CString("untitled")
@@ -103,22 +98,15 @@ func (win Window) Draw(dp image.Point, src wandi.Image) (err error) {
 // DrawRect draws a subset of the src image, as defined by the source rectangle
 // sr, onto the window starting at the destination point dp.
 func (win Window) DrawRect(dp image.Point, src wandi.Image, sr image.Rectangle) (err error) {
-	// Make the context of the window current. This operation is essentially a
-	// nop if it's already current.
-	C.glfwMakeContextCurrent(win.win)
+	win.MakeCurrent()
 
 	panic("not yet implemented")
 }
 
-// Fill fills the entire window with the provided color.
-func (win Window) Fill(c color.Color) {
-	// Make the context of the window current. This operation is essentially a
-	// nop if it's already current.
+// MakeCurrent makes the context of the window current. This operation is
+// essentially a nop if it's already current.
+func (win Window) MakeCurrent() {
 	C.glfwMakeContextCurrent(win.win)
-
-	// Fill the entire window with the color c.
-	gl.ClearColor(glColor(c))
-	gl.Clear(gl.COLOR_BUFFER_BIT)
 }
 
 // Display displays what has been rendered so far to the window.
