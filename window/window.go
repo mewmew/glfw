@@ -25,7 +25,8 @@ type Window struct {
 	win *C.GLFWwindow
 }
 
-// Open opens a new window of the specified dimensions.
+// Open opens a new window of the specified dimensions. It also makes the
+// GPU context of the window current.
 //
 // Note: This function may only be called from the main thread.
 //
@@ -44,6 +45,8 @@ func Open(width, height int) (win Window, err error) {
 	if win.win == nil {
 		return Window{}, fmt.Errorf("window.Open: %v", glfw.LastError())
 	}
+
+	win.MakeCurrent()
 
 	return win, nil
 }
@@ -103,7 +106,7 @@ func (win Window) DrawRect(dp image.Point, src wandi.Image, sr image.Rectangle) 
 	panic("not yet implemented")
 }
 
-// MakeCurrent makes the context of the window current. This operation is
+// MakeCurrent makes the CPU context of the window current. This operation is
 // essentially a nop if it's already current.
 func (win Window) MakeCurrent() {
 	C.glfwMakeContextCurrent(win.win)
