@@ -46,7 +46,7 @@ func Open(width, height int) (win Window, err error) {
 		return Window{}, fmt.Errorf("window.Open: %v", glfw.LastError())
 	}
 
-	win.MakeCurrent()
+	win.SetActive()
 
 	return win, nil
 }
@@ -101,14 +101,14 @@ func (win Window) Draw(dp image.Point, src wandi.Image) (err error) {
 // DrawRect draws a subset of the src image, as defined by the source rectangle
 // sr, onto the window starting at the destination point dp.
 func (win Window) DrawRect(dp image.Point, src wandi.Image, sr image.Rectangle) (err error) {
-	win.MakeCurrent()
+	win.SetActive()
 
 	panic("not yet implemented")
 }
 
-// MakeCurrent makes the CPU context of the window current. This operation is
-// essentially a nop if it's already current.
-func (win Window) MakeCurrent() {
+// SetActive activates the CPU context of the window. This operation is
+// essentially a nop if it's already active.
+func (win Window) SetActive() {
 	C.glfwMakeContextCurrent(win.win)
 }
 
