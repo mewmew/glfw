@@ -106,8 +106,7 @@ func (win Window) DrawRect(dp image.Point, src wandi.Image, sr image.Rectangle) 
 	panic("not yet implemented")
 }
 
-// SetActive activates the CPU context of the window. This operation is
-// essentially a nop if it's already active.
+// SetActive activates the GPU context of the window.
 func (win Window) SetActive() {
 	C.glfwMakeContextCurrent(win.win)
 }
