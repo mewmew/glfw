@@ -49,7 +49,7 @@ displays two images.
 
 	go get github.com/mewmew/win/examples/simple
 
-![Screenshot - simple](https://raw.github.com/mewmew/glfw/master/examples/simple/simple.png)
+![Screenshot - simple](https://raw.githubusercontent.com/mewmew/glfw/master/examples/simple/simple.png)
 
 public domain
 -------------
